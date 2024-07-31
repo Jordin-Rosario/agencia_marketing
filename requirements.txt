@@ -1,0 +1,8 @@
+Django==5.0.7 #? Framework django
+django-environ==0.11.2 #? Privatize the keys
+django-cors-headers==4.4.0 #? Comunications with backend and frontend
+djangorestframework==3.15.2 #? Es el framework que permite hacer la comunicacion entre el back y el front
+Pillow==10.4.0 #? Manage photos
+django-storages==1.14.4 #? Save files in AWS
+django-ckeditor==6.7.1
+psycopg2==2.9.9 #? Hace la conexion con PostgresSql
