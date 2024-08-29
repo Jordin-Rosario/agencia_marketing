@@ -42,7 +42,7 @@ LIBRERIES_APPS = [
 
 
 PROJECT_APPS = [
-
+    'apps.agencia'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LIBRERIES_APPS + PROJECT_APPS
@@ -166,7 +166,6 @@ CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST_DEV')
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS_DEV')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 if not DEBUG:
     ALLOWED_HOSTS=env.list('ALLOWED_HOST_DEPLOY')
