@@ -6,7 +6,7 @@ class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length = 200)
     descripcion = models.TextField()
-
+    foto = models.ImageField(upload_to='productos/', null=True, blank=True)
 
 
 class Pedido(models.Model):
