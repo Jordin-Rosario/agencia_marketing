@@ -11,25 +11,29 @@ import Blog from "containers/pages/Blog";
 import Careers from "containers/pages/Careers";
 import Contact from "containers/pages/Contact";
 import About from "containers/pages/About";
+import {NextUIProvider} from "@nextui-org/react";
+
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Routes>
-          {/* Error display */}
-          <Route path="*" element={<Error404/>}/>
+    <NextUIProvider>
+      <Provider store={store}>
+        <Router>
+          <Routes>
+            {/* Error display */}
+            <Route path="*" element={<Error404/>}/>
 
-          <Route path="/" element={<Home/>}/>
-          <Route path="/cases" element={<Cases/>}/>
-          <Route path="/services" element={<Services/>}/>
-          <Route path="/blog" element={<Blog/>}/>
-          <Route path="/careers" element={<Careers/>}/>
-          <Route path="/contact" element={<Contact/>}/>
-          <Route path="/about" element={<About/>}/>
-        </Routes>
-      </Router>
-    </Provider>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/cases" element={<Cases/>}/>
+            <Route path="/services" element={<Services/>}/>
+            <Route path="/blog" element={<Blog/>}/>
+            <Route path="/careers" element={<Careers/>}/>
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/about" element={<About/>}/>
+          </Routes>
+        </Router>
+      </Provider>
+    </NextUIProvider>
   );
 }
 

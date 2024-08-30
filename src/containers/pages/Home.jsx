@@ -3,6 +3,9 @@ import Navbar from 'components/navigations/Navbar'
 import Layouts from 'hocs/layouts/Layouts'
 import React, {useEffect, useState} from 'react'
 import { getCookie } from 'components/navigations/csrf_token'
+// import {Button} from "@nextui-org/react";
+import { TrashIcon } from '@heroicons/react/outline';
+import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
 
 
 const request = async (url) => {
@@ -89,36 +92,54 @@ const Home = () => {
     <Layouts>
         <Navbar/>
         <div className='pt-14 container mx-auto'>
-          <div className='grid grid-cols-4 gap-x-4 gap-y-10'>
+          <div className='flex flex-wrap gap-x-4 gap-y-10 justify-normal'>
 
             {
               productos['results']?.map((producto)=> (
-                <div class="flex flex-col mt-6 text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl w-80">
-                  <div
-                    class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    {
-                      producto.foto && (
-                        <img src={producto.foto} className='object-cover w-full h-full' alt=""/>
-                      )
-                    }
-                  </div>
-                  <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                      {producto.nombre}
-                    </h5>
-                    <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                      {producto.descripcion}
-                    </p>
-                  </div>
-                  <div class="p-6 pt-0">
-                    <button
-                      class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                      onClick={() => handleDelete(producto.id)}
-                    >
-                      Eliminar producto
-                    </button>
-                  </div>
-                </div>  
+                // <div class="flex flex-col mt-6 text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl w-80">
+                //   <div
+                //     class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+                //     {
+                //       producto.foto && (
+                //         <img src={producto.foto} className='object-cover w-full h-full' alt=""/>
+                //       )
+                //     }
+                //   </div>
+                //   <div class="p-6">
+                //     <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                //       {producto.nombre}
+                //     </h5>
+                //     <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                //       {producto.descripcion}
+                //     </p>
+                //   </div>
+                //   <div class="p-6 pt-0">
+                //     <Button 
+                //       color="danger" 
+                //       variant="bordered" 
+                //       startContent={<TrashIcon className='w-5'/>}
+                //       // onClick={() => handleDelete(producto.id)}
+                //     >
+                //       Eliminar
+                //     </Button>
+                //   </div>
+                // </div>  
+                <Card className="py-4">
+                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl h-52"
+                    src={producto.foto}
+                    width={270}
+                  />
+                </CardHeader>
+                <CardBody className="overflow-visible py-2">
+                  <p className="text-tiny uppercase font-bold">Daily Mix</p>
+                  <small className="text-default-500">12 Tracks</small>
+                  <h4 className="font-bold text-large">Frontend Radio</h4>
+                  
+                </CardBody>
+              </Card>
               ))
             }
           </div>
