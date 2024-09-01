@@ -4,9 +4,12 @@ import Layouts from 'hocs/layouts/Layouts'
 import React, {useEffect, useState} from 'react'
 import { getCookie } from 'components/navigations/csrf_token'
 // import {Button} from "@nextui-org/react";
-import { TrashIcon } from '@heroicons/react/outline';
+import { SearchIcon} from '@heroicons/react/outline';
 import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
+import {Button} from "@nextui-org/react";
 
+
+import {Input} from "@nextui-org/react";
 
 const request = async (url) => {
   const res = await fetch(url)
@@ -39,6 +42,28 @@ const deleteProducto = async (id) => {
     throw error; // Lanza el error para que el componente lo maneje
   }
 };
+
+const searchProductReq = async (searchValue) =>  {
+  try {
+    const csrfToken = getCookie('csrftoken'); 
+    const response = await fetch(`http://127.0.0.1:8000/agencia/servicios/?search=${searchValue}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken // Incluye el token CSRF en el encabezado
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+    const data = response.json()
+    return data; // Devuelve la respuesta de la solicitud
+  } catch (error) {
+    console.error("Hubo un error al eliminar el usuario:", error);
+    throw error; // Lanza el error para que el componente lo maneje
+  }
+}
 
 const Home = () => {
   const [productos, setProductos] = useState({});
@@ -84,6 +109,16 @@ const Home = () => {
     };
   };
 
+  const [searchValue, setSearchValue] = useState();
+  const handleInput = (e) => {
+    setSearchValue(e.target.value)
+
+  }
+  const searchProduct = async () => {
+    const fetchData = await searchProductReq(searchValue);
+    setProductos(fetchData)
+  }
+
   useEffect(() => {
     fetchData('http://127.0.0.1:8000/agencia/servicios/');
   }, []);
@@ -91,39 +126,32 @@ const Home = () => {
   return (
     <Layouts>
         <Navbar/>
-        <div className='pt-14 container mx-auto'>
-          <div className='flex flex-wrap gap-x-4 gap-y-10 justify-normal'>
+        <div className='container mx-auto px-10'>
+          <div className="w-52 flex-wrap md:flex-nowrap gap-4 my-10">
+            <div className='flex gap-x-2 w-96'>
+              <div className='w-52'>
 
+              <Input
+                type="email"
+                label="Buscar un producto"
+                labelPlacement="outside"
+                className='font-semibold text-blue-base'
+                onInput={handleInput}
+              />
+              </div>
+              <Button  
+                color="primary" 
+                aria-label="Take a photo" 
+                className='mt-auto'
+                onClick={()=>searchProduct()}
+                >
+                <SearchIcon className='h-6 text-gray-200'/>
+              </Button>
+            </div>
+          </div>
+          <div className='flex flex-wrap gap-x-4 gap-y-10 justify-normal'>
             {
               productos['results']?.map((producto)=> (
-                // <div class="flex flex-col mt-6 text-gray-700 bg-gray-100 shadow-md bg-clip-border rounded-xl w-80">
-                //   <div
-                //     class="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                //     {
-                //       producto.foto && (
-                //         <img src={producto.foto} className='object-cover w-full h-full' alt=""/>
-                //       )
-                //     }
-                //   </div>
-                //   <div class="p-6">
-                //     <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                //       {producto.nombre}
-                //     </h5>
-                //     <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                //       {producto.descripcion}
-                //     </p>
-                //   </div>
-                //   <div class="p-6 pt-0">
-                //     <Button 
-                //       color="danger" 
-                //       variant="bordered" 
-                //       startContent={<TrashIcon className='w-5'/>}
-                //       // onClick={() => handleDelete(producto.id)}
-                //     >
-                //       Eliminar
-                //     </Button>
-                //   </div>
-                // </div>  
                 <Card className="py-4">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <Image

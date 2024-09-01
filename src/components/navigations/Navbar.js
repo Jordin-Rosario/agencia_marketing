@@ -5,7 +5,7 @@ import logo from 'assets/image/logoPrueba.png'
 const Navbar = () => {
   return (
     <nav class="bg-white border-gray-200 dark:bg-gray-900 ">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2 py-3">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-2">
             <a to="https://flowbite.com/" class="flex items-center space-x-1 rtl:space-x-reverse">
                 <img src={logo} class="h-16" alt="Flowbite Logo" />
                 <h1 className="text-[#007fc6] font-semibold text-2xl">AdFusion</h1>
