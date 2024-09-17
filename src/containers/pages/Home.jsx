@@ -4,9 +4,18 @@ import Layouts from 'hocs/layouts/Layouts'
 import React, {useEffect, useState} from 'react'
 import { getCookie } from 'components/navigations/csrf_token'
 // import {Button} from "@nextui-org/react";
+<<<<<<< HEAD
 import {Card, CardHeader, CardBody, Image, Skeleton} from "@nextui-org/react";
 import {Pagination} from "@nextui-org/react";
 import SkeletonCard from 'components/SkeletonCard'
+=======
+import { SearchIcon} from '@heroicons/react/outline';
+import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
+import {Button} from "@nextui-org/react";
+
+>>>>>>> 7ff9dd22e1ae8c28a7757c8227b207348dc2ae28
+
+import {Input} from "@nextui-org/react";
 
 const request = async (url) => {
   const formData = new FormData();
@@ -56,6 +65,28 @@ const deleteProducto = async (id) => {
   }
 };
 
+const searchProductReq = async (searchValue) =>  {
+  try {
+    const csrfToken = getCookie('csrftoken'); 
+    const response = await fetch(`http://127.0.0.1:8000/agencia/servicios/?search=${searchValue}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken // Incluye el token CSRF en el encabezado
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+    const data = response.json()
+    return data; // Devuelve la respuesta de la solicitud
+  } catch (error) {
+    console.error("Hubo un error al eliminar el usuario:", error);
+    throw error; // Lanza el error para que el componente lo maneje
+  }
+}
+
 const Home = () => {
   const [productos, setProductos] = useState({});
 
@@ -104,6 +135,22 @@ const Home = () => {
     };
   };
 
+<<<<<<< HEAD
+=======
+  const [searchValue, setSearchValue] = useState();
+  const handleInput = (e) => {
+    setSearchValue(e.target.value)
+
+  }
+  const searchProduct = async () => {
+    const fetchData = await searchProductReq(searchValue);
+    setProductos(fetchData)
+  }
+
+  useEffect(() => {
+    fetchData('http://127.0.0.1:8000/agencia/servicios/');
+  }, []);
+>>>>>>> 7ff9dd22e1ae8c28a7757c8227b207348dc2ae28
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -117,6 +164,7 @@ const Home = () => {
   return (
     <Layouts>
         <Navbar/>
+<<<<<<< HEAD
         <div className='pt-14 container mx-auto '>
           <div className='text-center mx-10'>
             <div className='flex flex-wrap gap-x-4 gap-y-10 items-center justify-center'>
@@ -143,6 +191,52 @@ const Home = () => {
                 ))
               }
             </div>
+=======
+        <div className='container mx-auto px-10'>
+          <div className="w-52 flex-wrap md:flex-nowrap gap-4 my-10">
+            <div className='flex gap-x-2 w-96'>
+              <div className='w-52'>
+
+              <Input
+                type="email"
+                label="Buscar un producto"
+                labelPlacement="outside"
+                className='font-semibold text-blue-base'
+                onInput={handleInput}
+              />
+              </div>
+              <Button  
+                color="primary" 
+                aria-label="Take a photo" 
+                className='mt-auto'
+                onClick={()=>searchProduct()}
+                >
+                <SearchIcon className='h-6 text-gray-200'/>
+              </Button>
+            </div>
+          </div>
+          <div className='flex flex-wrap gap-x-4 gap-y-10 justify-normal'>
+            {
+              productos['results']?.map((producto)=> (
+                <Card className="py-4">
+                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl h-52"
+                    src={producto.foto}
+                    width={270}
+                  />
+                </CardHeader>
+                <CardBody className="overflow-visible py-2">
+                  <p className="text-tiny uppercase font-bold">Daily Mix</p>
+                  <small className="text-default-500">12 Tracks</small>
+                  <h4 className="font-bold text-large">Frontend Radio</h4>
+                  
+                </CardBody>
+              </Card>
+              ))
+            }
+>>>>>>> 7ff9dd22e1ae8c28a7757c8227b207348dc2ae28
           </div>
 
 
