@@ -11,8 +11,6 @@ from core.utilis import SmallResultsSetPagination, LargeResultsSetPagination
 
 
 
-# Create your views here.
-
 class ProductosListAPIView(ListCreateAPIView):
     queryset = Producto.objects.all().order_by('id')
     serializer_class = ProductoSerializers
