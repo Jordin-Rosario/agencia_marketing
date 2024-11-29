@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import environ 
-
+from celery.schedules import crontab
 
 env = environ.Env()
 environ.Env.read_env()
@@ -176,3 +176,11 @@ if not DEBUG:
         "default": env.db("DATABASE_URL"),
     }
     DATABASES["default"]["ATOMIC_REQUESTS"] = True
+
+
+CELERY_BEAT_SCHEDULE = {
+    'every-monday-morning-task': {
+        'task': 'apps.agencia.tasks.every_monday_morning',
+        'schedule': crontab(hour=9, minute=58, day_of_week='1-5'),
+    },
+}
